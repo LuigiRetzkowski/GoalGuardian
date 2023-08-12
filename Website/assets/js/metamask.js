@@ -11,7 +11,7 @@ async function connect() {
       console.log("No wallet");
    }
 }
-let web3;
+
 
 async function connectMetaMask() {
    // Check if MetaMask is installed
@@ -44,8 +44,8 @@ async function connectMetaMask() {
          // Set up the transaction details
          const tx = {
             from: (await web3.eth.getAccounts())[0],
-            to: '0x123abc',  // contract address
-            value: web3.utils.toWei('1', 'ether'),
+            to: '0xD8fEC09336128a1B7876E65bA6cd0ca461C9A04B',  // contract address
+            value: web3.utils.toWei('0.05', 'ether'),
             gas: 21000,
             gasPrice: await web3.eth.getGasPrice()
          };
