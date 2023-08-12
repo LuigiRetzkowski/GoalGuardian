@@ -165,7 +165,6 @@ pragma solidity ^0.8.10;
 
 //Interface for other collections. We use it to check wether the user receives an NFT-Certificate which marks completion of this challenge
 interface ProofInterface {
-    function walletOfOwner(address _owner) external view returns (uint256[] memory);
     function balanceOf(address _owner) external view returns (uint256 balance);
 }
 contract GoalGuardian_flattened is Ownable   {
@@ -194,8 +193,8 @@ contract GoalGuardian_flattened is Ownable   {
         string name;
         string description;
         address proofCollection;
-        uint creationTimestamp;
-        uint timeframeInDays;
+        int creationTimestamp;
+        int timeframeInDays;
         uint value;
         bool active;
     }
@@ -209,21 +208,23 @@ contract GoalGuardian_flattened is Ownable   {
     }
 
     //Anyone can create a bet. If the condition is fullfilled, which is fullfilled if they own a certain NFT
-    function createChallenge(address _benefactor,  string memory _name, string memory _description, address _proofCollection, uint _timeframeInDays, uint value) public payable {
-        require(msg.value >= value, "Ether value sent is below the challengeamount");
-        require(checkIfCompleted(msg.sender,_proofCollection),"Bet is already fullfilled and therefore unfair"); //Wenn bet created, hat er das NFT schon? Falls ja, abort, das ist scam
+    function createChallenge(address _benefactor,  string memory _name, string memory _description, address _proofCollection, int _timeframeInDays, uint value) public payable {
+        require(msg.value  >= value, "Ether value sent is below the challengeamount");
+        require(!checkIfCompleted(_benefactor ,_proofCollection),"Bet is already fullfilled and therefore unfair"); //Wenn bet created, hat er das NFT schon? Falls ja, abort, das ist scam
 
         //Calculate challenge id
         _challengeIds.increment();
         pendingBetAmounts += msg.value;
 
-        challenges[_challengeIds.current()] = Challenge(_challengeIds.current()  ,_benefactor,   _name,  _description,  _proofCollection, block.timestamp,  _timeframeInDays,  value, true);
+        challenges[_challengeIds.current()] = Challenge(_challengeIds.current()  ,_benefactor,   _name,  _description,  _proofCollection, int(block.timestamp),  _timeframeInDays,  value, true);
         emit newChallenge(_challengeIds.current() , _description, value );
 }
 
     //Anyone can create a bet. If the condition is fullfilled, which is fullfilled if they own a certain NFT
     function createCounterChallenge( uint challengeId, address _benefactor, uint value) public payable {
         require(msg.value >= value, "Ether value sent is below the challengeamount");
+        require(!checkIfCompleted(_benefactor, challenges[challengeId].proofCollection),"Bet already succeeded; Can't bet against it anymore"); //Wenn bet created, hat er das NFT schon? Falls ja, abort, das ist scam
+
         Challenge memory enemyChallenge = challenges[challengeId];
 
         //Calculate CounterChallenge id
@@ -236,14 +237,16 @@ contract GoalGuardian_flattened is Ownable   {
     }
 
     //Checks wether the bet is completed through checking wether the confirmation NFT was received
-    function checkIfCompleted (address _owner, address _proofCollection) internal view returns(bool){
+    function checkIfCompleted (address _owner, address _proofCollection) public view returns(bool){
         ProofInterface ProofContract = ProofInterface(_proofCollection);
         return ProofContract.balanceOf(_owner) >=1;
     }
 
     //Checks wether the claim + goal was performed in the given timeframe
-    function checkIfCompletedInTime (Challenge memory _myChallenge, uint _finished) internal pure returns(bool){
-        return _myChallenge.creationTimestamp +  _myChallenge.timeframeInDays >= _finished;
+    function checkIfCompletedInTime (Challenge memory _myChallenge, int _finished) public pure returns(bool){
+        int daysMultiplicator = 60 * 60 * 24 ;
+        //Days didnt work here, so had to calculate by hand
+        return (_myChallenge.creationTimestamp +  (_myChallenge.timeframeInDays * daysMultiplicator)) >= _finished;
     }
 
     //Claims the money for the winning bet
@@ -255,7 +258,7 @@ contract GoalGuardian_flattened is Ownable   {
         require(checkIfCompleted(MyChallenge.benefactor, MyChallenge.proofCollection), "Challenge was not completed");
 
         //Future: Replace block.timestamp by creation time of nft, to allow for more time to claim
-        require(checkIfCompletedInTime(MyChallenge, block.timestamp), "Finished to late");
+        require(checkIfCompletedInTime(MyChallenge, int(block.timestamp)), "Finished to late");
         MyChallenge.active = false;
         pendingBetAmounts -= MyChallenge.value;
 
@@ -275,7 +278,7 @@ contract GoalGuardian_flattened is Ownable   {
         require(MyCounterChallenge.active, "Bet is inactive");
         require(!checkIfCompleted(MyCounterChallenge.challenge.benefactor, MyCounterChallenge.challenge.proofCollection), "Challenge was completed, therefore your Counterclaim is ineligible");
 
-        require(!checkIfCompletedInTime(MyCounterChallenge.challenge, block.timestamp), "They finished and claimed in time");
+        require(!checkIfCompletedInTime(MyCounterChallenge.challenge, int(block.timestamp)), "They still have time left");
 
 
         uint percentageShares = (MyCounterChallenge.value * 100) / sumUp(MyCounterChallenge.challenge.id);

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light">
+
+<head>
+    <title>Create Challenge</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>ETH Munich</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan+Script&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/Event-Schedule.css">
+    <link rel="stylesheet" href="assets/css/Navbar-Right-Links-icons.css">
+    <link rel="stylesheet" href="assets/css/bootstrap/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.1/web3.min.js"></script>
+    <script src="https://c0f4f41c-2f55-4863-921b-sdk-docs.github.io/cdn/metamask-sdk.js"></script>
+
+    <script>
+
+        const MMSDK = new MetaMaskSDK()
+
+        const ethereum = MMSDK.getProvider() // You can also access via window.ethereum
+
+        ethereum.request({ method: 'eth_requestAccounts' })
+
+    </script>
+
+</head>
+
+<body>
+
+    <script type="text/javascript">
+        $(function () {
+            if (window.ethereum.isConnected()) {
+                $('.your-class').addClass('disabled');
+            }
+        });
+        $(function () {
+            if (!window.ethereum.isConnected()) {
+                $('.your-class').removeClass('disabled');
+            }
+        })
+    </script>
+
+    <nav class="navbar navbar-expand-md bg-body py-3" style="height:97px;background:rgb(255,255,255);">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span
+                    class="d-flex justify-content-center align-items-center bs-icon-sm bs-icon-rounded bs-icon-primary me-2 bs-icon"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                        viewbox="0 0 16 16" class="bi bi-bezier">
+                        <path fill-rule="evenodd"
+                            d="M0 10.5A1.5 1.5 0 0 1 1.5 9h1A1.5 1.5 0 0 1 4 10.5v1A1.5 1.5 0 0 1 2.5 13h-1A1.5 1.5 0 0 1 0 11.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm10.5.5A1.5 1.5 0 0 1 13.5 9h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM6 4.5A1.5 1.5 0 0 1 7.5 3h1A1.5 1.5 0 0 1 10 4.5v1A1.5 1.5 0 0 1 8.5 7h-1A1.5 1.5 0 0 1 6 5.5v-1zM7.5 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z">
+                        </path>
+                        <path
+                            d="M6 4.5H1.866a1 1 0 1 0 0 1h2.668A6.517 6.517 0 0 0 1.814 9H2.5c.123 0 .244.015.358.043a5.517 5.517 0 0 1 3.185-3.185A1.503 1.503 0 0 1 6 5.5v-1zm3.957 1.358A1.5 1.5 0 0 0 10 5.5v-1h4.134a1 1 0 1 1 0 1h-2.668a6.517 6.517 0 0 1 2.72 3.5H13.5c-.123 0-.243.015-.358.043a5.517 5.517 0 0 0-3.185-3.185z">
+                        </path>
+                    </svg></span><span>GoalGuardian</span></a><button data-bs-toggle="collapse"
+                data-bs-target="#navcol-2" class="navbar-toggler"><span class="visually-hidden">Toggle
+                    navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-2">
+                <ul class="navbar-nav ms-auto"></ul><a class="btn btn-warning ms-md-2" role="button"
+                    href="./index.html">Back to challenge list&nbsp;</a>
+            </div>
+        </div>
+    </nav>
+    <section class="position-relative py-4 py-xl-5">
+        <div class="container position-relative">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+                    <div class="card mb-5">
+                        <div class="card-body p-sm-5">
+                            <h2 class="text-center mb-4">Challenge:</h2>
+                            <form method="post">
+                                <div class="mb-3"><label class="form-label fw-bold form-label">Name:</label>
+                                    <p>CryptoZombies</p>
+                                </div>
+                                <div class="mb-3"><label style="font-weight: bold;"
+                                        class="form-label form-label">Deadline:</label>
+                                    <p>14. August 2023 14:42 UTC</p>
+                                </div>
+                                <div class="mb-3"><label class="form-label fw-bold form-label">Locked value:</label>
+                                    <p>1 ETH</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold form-label">Wallet:</label>
+                                    <div class="input-group">
+                                        <p>0x4242....4242</p>
+                                        <button class="btn btn-warning text-end" onclick="connectMetaMask();"
+                                            type="button">Metamask</button>
+                                    </div>
+                                </div>
+                                <div class="mb-3"><label class="form-label fw-bold form-label">Description:</label>
+                                    <p>Finish CryptoZombies tutorial course on Solidity. Claim by having confirmation NFT on your wallet.</p>
+                                </div>
+                                <div><button class="your-class btn btn-warning d-block w-100"
+                                        onclick="connectMetaMask();" type="submit">Claim</button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/agency.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.1/web3.min.js"></script>
+    <script src="assets/js/metamask.js"></script>
+    <script src="assets/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/metamask.js"></script>
+
+</body>
+
+</html>
