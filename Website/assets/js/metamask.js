@@ -28,26 +28,26 @@ async function connectMetaMask() {
          await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
-               chainId: '0x44D',
-               chainName: 'Polygon zkEVM',
+               chainId: '0x5A2',
+               chainName: 'Polygon zkEVM Testnet',
                nativeCurrency: {
                   name: 'ETH',
                   symbol: 'ETH',
                   decimals: 18
                },
-               rpcUrls: ['https://zkevm-rpc.com'],
-               blockExplorerUrls: ['https://zkevm.polygonscan.com/']
+               rpcUrls: ['https://rpc.public.zkevm-test.net'],
+               blockExplorerUrls: ['https://testnet-zkevm.polygonscan.com']
             }]
          });
-         console.log("try 2");
+         console.log(window.ethereum.isConnected());
 
          // Set up the transaction details
          const tx = {
-/*             from: (await web3.eth.getAccounts())[0],
+            from: (await web3.eth.getAccounts())[0],
             to: '0x123abc',  // contract address
             value: web3.utils.toWei('1', 'ether'),
             gas: 21000,
-            gasPrice: await web3.eth.getGasPrice() */
+            gasPrice: await web3.eth.getGasPrice()
          };
 
          // Send the transaction (MetaMask will show a popup for the user to sign)

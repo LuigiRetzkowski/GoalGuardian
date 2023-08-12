@@ -2,6 +2,7 @@
 <html data-bs-theme="light" lang="en" data-bss-forced-theme="light">
 
 <head>
+    <title>Create Challenge</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>ETH Munich</title>
@@ -28,6 +29,18 @@
 
 <body>
 
+    <script type="text/javascript">
+        $(function(){
+          if(window.ethereum.isConnected()){
+            $('.your-class').addClass('disabled');
+          }
+        });
+        $(function(){
+            if(!window.ethereum.isConnected()){
+              $('.your-class').removeClass('disabled');
+            }
+        })
+      </script>
 
     <nav class="navbar navbar-expand-md bg-body py-3" style="height:97px;background:rgb(255,255,255);">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span
@@ -44,7 +57,7 @@
                 data-bs-target="#navcol-2" class="navbar-toggler"><span class="visually-hidden">Toggle
                     navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
-                <ul class="navbar-nav ms-auto"></ul><a class="btn btn-primary ms-md-2" role="button"
+                <ul class="navbar-nav ms-auto"></ul><a class="btn btn-warning ms-md-2" role="button"
                     href="./index.html">Back to challenge list&nbsp;</a>
             </div>
         </div>
@@ -69,13 +82,13 @@
                                 </div>
                                 <div class="mb-3"><label class="form-label form-label">Wallet:</label>
                                     <div class="input-group"><input class="form-control" type="text"><button
-                                            class="btn btn-primary" onclick="connectMetaMask();" type="button">Metamask</button>
+                                            class="btn btn-warning" onclick="connectMetaMask();" type="button">Metamask</button>
                                     </div>
                                 </div>
                                 <div class="mb-3"><label class="form-label form-label">Description:</label><textarea
                                         class="form-control form-control" id="message-2" name="message"
                                         placeholder="Description of Challenge" rows="6"></textarea></div>
-                                <div><button class="btn btn-primary d-block w-100" onclick="connectMetaMask();"
+                                <div><button class="your-class btn btn-warning d-block w-100" onclick="connectMetaMask();"
                                         type="submit">Send </button></div>
                             </form>
                         </div>
