@@ -15,35 +15,39 @@ let web3;
 
 async function connectMetaMask() {
    // Check if MetaMask is installed
+   console.log("123");
    if (typeof window.ethereum !== 'undefined') {
       web3 = new Web3(window.ethereum);
       try {
+         console.log("try 0")
          // Request account access
          await window.ethereum.enable();
+         console.log("try 1");
 
          // Add Polygon Network
          await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
-               chainId: '80001',
-               chainName: 'Mumbai Testnet',
+               chainId: '0x44D',
+               chainName: 'Polygon zkEVM',
                nativeCurrency: {
-                  name: 'MATIC',
-                  symbol: 'MATIC',
+                  name: 'ETH',
+                  symbol: 'ETH',
                   decimals: 18
                },
-               rpcUrls: ['https://polygon-mumbai.g.alchemy.com/v2/your-api-key'],
-               blockExplorerUrls: ['https://mumbai.polygonscan.com/']
+               rpcUrls: ['https://zkevm-rpc.com'],
+               blockExplorerUrls: ['https://zkevm.polygonscan.com/']
             }]
          });
+         console.log("try 2");
 
          // Set up the transaction details
          const tx = {
-            from: (await web3.eth.getAccounts())[0],
+/*             from: (await web3.eth.getAccounts())[0],
             to: '0x123abc',  // contract address
             value: web3.utils.toWei('1', 'ether'),
             gas: 21000,
-            gasPrice: await web3.eth.getGasPrice()
+            gasPrice: await web3.eth.getGasPrice() */
          };
 
          // Send the transaction (MetaMask will show a popup for the user to sign)
